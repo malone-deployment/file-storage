@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+const BASE_URL =
+  'https://file-storage-backend-service-422041495987.asia-southeast1.run.app';
 
 function App() {
   const [file, setFile] = useState<File | undefined>(undefined);
@@ -9,10 +11,9 @@ function App() {
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const [images, setImages] = useState<{ id: string; url: string }[]>([]);
   const [error, setError] = useState<Error | undefined>(undefined);
-
   useEffect(() => {
     axios
-      .get('http://localhost:3000/images') // backend
+      .get(`${BASE_URL}/images`) // backend
       .then((response) => {
         setImages(response.data);
       })
@@ -35,7 +36,7 @@ function App() {
       return;
     }
 
-    const url = 'http://localhost:3000/uploadFile'; // backend
+    const url = `${BASE_URL}/uploadFile`; // backend
     const formData = new FormData();
     formData.append('file', file);
     formData.append('fileName', file.name);
@@ -53,7 +54,7 @@ function App() {
         const fileId = response.data.id;
         setUploadedFileId(fileId);
 
-        const imageUrl = `http://localhost:3000/image/${fileId}`; // backend
+        const imageUrl = `${BASE_URL}/image/${fileId}`; // backend
         setImageUrl(imageUrl);
 
         setImages([...images, { id: fileId, url: imageUrl }]);
@@ -66,7 +67,7 @@ function App() {
 
   function handleDeleteAll() {
     axios
-      .delete('http://localhost:3000/deleteAllImages') // backend
+      .delete(`${BASE_URL}/deleteAllImages`) // backend
       .then((response) => {
         console.log(response.data.message);
 

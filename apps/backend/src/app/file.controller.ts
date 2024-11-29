@@ -49,7 +49,7 @@ export class FileController {
 
     const imageUrls = files.map((file) => ({
       id: file.id,
-      url: `http://localhost:3000/image/${file.id}`,
+      url: `https://file-storage-backend-service-422041495987.asia-southeast1.run.app/image/${file.id}`,
     }));
 
     return res.json(imageUrls);
