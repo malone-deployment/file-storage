@@ -47,7 +47,7 @@ env:
   REGION: ${{ secrets.REGION }} # Google Cloud region
   SERVICE_EMAIL: ${{ secrets.SERVICE_EMAIL }} # Service account email
   WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }} # Workload Identity Provider
-  GAR_REPOSITORY_NAME: ${{ secrets.REPOSITORY_NAME }} # Artifact Registry repository
+  GAR_REPOSITORY_NAME: ${{ secrets.GAR_REPOSITORY_NAME }} # Artifact Registry repository
 
   BACKEND_IMAGE: 'file-storage-backend-image' # backend image name
   WEB_IMAGE: 'file-storage-web-image' # web image name
@@ -91,6 +91,7 @@ jobs:
           registry: '${{ env.REGION }}-docker.pkg.dev'
         #WEB
       - name: 'Build and Push web Image to Artifact Registry'
+
         run: |-
           DOCKER_TAG="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.WEB_IMAGE }}:${{ github.sha }}"
           docker build -f apps/web/Dockerfile -t "${DOCKER_TAG}" .
